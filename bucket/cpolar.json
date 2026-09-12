@@ -3,13 +3,16 @@
   "description": "安全的内网穿透云服务，将内网站点发布至公网",
   "homepage": "https://www.cpolar.com/",
   "license": "Proprietary",
+  "notes": "官网下载页不展示最新版本号，无自动更新来源，需手动更新。",
   "architecture": {
     "64bit": {
-      "url": "https://www.cpolar.com/static/downloads/releases/3.3.18/cpolar-stable-windows-386-setup.zip"
+      "url": "https://www.cpolar.com/static/downloads/releases/3.3.18/cpolar-stable-windows-amd64.zip",
+      "hash": "7548c17396ddb2aaea9cbafc0dfde52d18a8e941d0af4a67418758ca9a825d2e"
     },
     "32bit": {
-      "url": "https://www.cpolar.com/static/downloads/releases/3.3.18/cpolar-stable-windows-386-setup.zip"
+      "url": "https://www.cpolar.com/static/downloads/releases/3.3.18/cpolar-stable-windows-386.zip",
+      "hash": "88045c2acc65ccc42ef0f1885d260d683c2940d727f0190259383c36902227b8"
     }
   },
-  "bin": "cpolar.exe",
+  "bin": "cpolar.exe"
 }
