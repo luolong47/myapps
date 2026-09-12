@@ -20,23 +20,6 @@
             "WorkDaddy"
         ]
     ],
-    "persist": [
-        "data"
-    ],
-    "pre_install": [
-        "# 数据目录迁移到 persist（参照 extras idea.json 的思路：重定向 + persist）",
-        "$src = \"$env:APPDATA\\WorkDaddy\"",
-        "$dst = \"$persist_dir\\data\"",
-        "if ((Test-Path $src) -and !(Test-Path $dst)) { Move-Item -Path $src -Destination $dst }",
-        "if (!(Test-Path $dst)) { New-Item -ItemType Directory -Path $dst -Force | Out-Null }",
-        "if (Test-Path $src) { Remove-Item -Path $src -Recurse -Force -ErrorAction SilentlyContinue }",
-        "New-Item -ItemType Junction -Path $src -Target $dst -ErrorAction Stop | Out-Null"
-    ],
-    "pre_uninstall": [
-        "# 仅拆除 junction，数据保留在 persist（scoop uninstall --purge 才会清除）",
-        "$src = \"$env:APPDATA\\WorkDaddy\"",
-        "if ((Get-Item $src -ErrorAction SilentlyContinue).LinkType -eq 'Junction') { Remove-Item $src -Force }"
-    ],
     "checkver": {
         "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
         "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""

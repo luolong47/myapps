@@ -5,8 +5,7 @@
     "license": "AGPL-3.0-or-later",
     "notes": [
         "便携版由 luolong47/WorkDaddy fork 基于上游同一 tag 源码构建，资产与上游 release 同步。",
-        "需先安装 WorkBuddy AI 桌面端（workbuddy.ai）。",
-        "数据目录随 workdaddy（国内版）的 persist 统一管理（%APPDATA%\\WorkDaddy 已 junction 至 scoop persist），本包无需单独配置。"
+        "需先安装 WorkBuddy AI 桌面端（workbuddy.ai）。"
     ],
     "architecture": {
         "64bit": {
