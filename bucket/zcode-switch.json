@@ -20,7 +20,7 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/pjpv/zcode-switch/releases/download/v$version/zcode-switch_${version}_portable.exe#/zcode-switch.exe",
+                "url": "https://github.com/pjpv/zcode-switch/releases/download/v$version/zcode-switch_$version_portable.exe#/zcode-switch.exe",
                 "hash": {
                     "url": "https://github.com/pjpv/zcode-switch/releases/download/v$version/checksums-Windows-v$version.txt",
                     "regex": "([a-fA-F0-9]{64})\\s+zcode-switch_.+_portable\\.exe"
