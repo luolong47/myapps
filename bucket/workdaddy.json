@@ -1,0 +1,38 @@
+{
+    "version": "1.2.0",
+    "description": "WorkBuddy 桌面端增强助手（国内版）：自动签到领积分、多账号独立备份、点切即用；免打扰模式让 AI 无人值守跑长任务；跨账号会话迁移、异常中断自动续接。",
+    "homepage": "https://github.com/babygoton/WorkDaddy",
+    "license": "AGPL-3.0-or-later",
+    "notes": [
+        "便携版由 luolong47/WorkDaddy fork 基于上游同一 tag 源码构建，资产与上游 release 同步。",
+        "需先安装 WorkBuddy 桌面端（workbuddy.cn）。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/luolong47/WorkDaddy/releases/download/v1.2.0/WorkDaddy-Portable-1.2.0.zip",
+            "hash": "fc868475232eafb883efa10cef9534cd661536b50121394a0fbca175c476b3a0"
+        }
+    },
+    "bin": "WorkDaddyLauncher.exe",
+    "shortcuts": [
+        [
+            "WorkDaddyLauncher.exe",
+            "WorkDaddy"
+        ]
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
+        "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/luolong47/WorkDaddy/releases/download/v$version/WorkDaddy-Portable-$version.zip",
+                "hash": {
+                    "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
+                    "regex": "\"name\":\\s*\"WorkDaddy-Portable-$version\\.zip\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
+                }
+            }
+        }
+    }
+}
