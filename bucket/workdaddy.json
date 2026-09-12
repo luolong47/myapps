@@ -20,6 +20,12 @@
             "WorkDaddy"
         ]
     ],
+    "post_install": [
+        "# scoop shortcuts 不支持 IconLocation；上游图标在独立 .ico（打包脚本保证其不随版本变化）",
+        "$ws = New-Object -ComObject WScript.Shell",
+        "$icon = \"$dir\\scripts\\WorkDaddy.ico\"",
+        "Get-ChildItem \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\" -Recurse -Filter 'WorkDaddy.lnk' -ErrorAction SilentlyContinue | ForEach-Object { $s = $ws.CreateShortcut($_.FullName); $s.IconLocation = $icon; $s.Save() }"
+    ],
     "checkver": {
         "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
         "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""
