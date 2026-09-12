@@ -1,20 +1,20 @@
 {
-    "version": "2025.12.0",
+    "version": "2023.9.256",
     "description": "RaiDrive. Conveniently manage all your cloud services as a network drive using the standard file explorer.",
     "homepage": "https://www.raidrive.com/",
     "license": {
         "identifier": "Freeware",
         "url": "https://www.raidrive.com/about/terms"
     },
-    "changelog": "https://www.raidrive.com/update",
+    "changelog": "https://www.raidrive.com/release-notes",
     "architecture": {
         "64bit": {
-            "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.90_x64.msi",
-            "hash": "d4393c7a237228ad9be7b4a2832a03daeea850851f45ccbefedcc167e987c761"
+            "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.256_x64.msi",
+            "hash": "c4c4ecae27ccefee187766833a57d3aab3ee2af44bbd41c27ab0a32d3828dc17"
         },
         "arm64": {
-            "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.90_arm64.msi",
-            "hash": "447324232365dc3b51c07f25e3696be1fb3bc33cce80934c91c5075049ec9252"
+            "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.256_arm64.msi",
+            "hash": "59bdb7ce31e54c72cf5854dc57a53cd52f2fe5b015211f7540f66b0813374837"
         }
     },
     "##": "https://www.advancedinstaller.com/user-guide/exe-setup-file.html",
@@ -26,16 +26,16 @@
         ]
     ],
     "checkver": {
-        "url": "https://www.raidrive.com/update",
-        "regex": "RaiDrive</span> <span class=\"fw-bold\">([\\d.]+)"
+        "url": "https://www.raidrive.com/release-notes",
+        "regex": "RaiDrive_([\\d.]+)_x64\\.msi"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.90_x64.msi"
+                "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_$version_x64.msi"
             },
             "arm64": {
-                "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.90_arm64.msi"
+                "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_$version_arm64.msi"
             }
         }
     }
