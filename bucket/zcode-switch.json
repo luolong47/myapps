@@ -1,0 +1,31 @@
+{
+    "version": "1.5.4",
+    "description": "One-click switcher for multiple ZCode accounts. 多账号一键切换，额度展示 / 活动领取 / 加密导出。",
+    "homepage": "https://github.com/pjpv/zcode-switch",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/pjpv/zcode-switch/releases/download/v1.5.4/zcode-switch_1.5.4_portable.exe#/zcode-switch.exe",
+            "hash": "f4963e48a9a2f2b9d31a38c585dca4e99f916aad285c3c920e8352524cc67e0a"
+        }
+    },
+    "bin": "zcode-switch.exe",
+    "shortcuts": [
+        [
+            "zcode-switch.exe",
+            "ZCode Switch"
+        ]
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/pjpv/zcode-switch/releases/download/v$version/zcode-switch_${version}_portable.exe#/zcode-switch.exe",
+                "hash": {
+                    "url": "https://github.com/pjpv/zcode-switch/releases/download/v$version/checksums-Windows-v$version.txt",
+                    "regex": "([a-fA-F0-9]{64})\\s+zcode-switch_.+_portable\\.exe"
+                }
+            }
+        }
+    }
+}
