@@ -6,7 +6,7 @@
         "identifier": "Freeware",
         "url": "https://www.raidrive.com/about/terms"
     },
-    "changelog": "https://www.raidrive.com/release-notes",
+    "notes": "Release notes: https://www.raidrive.com/release-notes",
     "architecture": {
         "64bit": {
             "url": "https://app.raidrive.com/download/raidrive/release/RaiDrive_2023.9.256_x64.msi",
