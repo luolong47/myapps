@@ -1,0 +1,40 @@
+{
+    "version": "5.5.6.38337834",
+    "description": "WorkBuddy 是腾讯出品的全场景 AI 办公工作台：说出要求、自主规划并调用工具执行任务、交付完整成果；深度打通腾讯文档、腾讯会议、企业微信、微信等腾讯办公生态。",
+    "homepage": "https://www.workbuddy.cn/",
+    "license": "Freeware",
+    "notes": [
+        "安装包 URL 由官方更新接口返回（含 commit 短哈希），autoupdate 从接口整体提取，请勿手工拼接。",
+        "官方接口不提供 sha256，autoupdate 更新时会自动下载安装包计算 hash 并回填（每次更新需下载约 500MB）。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://download.codebuddy.cn/workbuddy/saas/win32-x64-user/WorkBuddy-win32-x64-user-5.5.6.38337834-5f969292.exe#/dl.7z",
+            "hash": "b1c61b8a0550012c3e9e2cce4b2d566fb5bdb3283e97146b8808c3dcb1a571f4"
+        }
+    },
+    "installer": {
+        "script": [
+            "Expand-7zipArchive \"$dir\\`$PLUGINSDIR\\app-64.7z\" \"$dir\" -Removal",
+            "Remove-Item \"$dir\\`$PLUGINSDIR\", \"$dir\\`$R0\" -Force -Recurse -ErrorAction SilentlyContinue"
+        ]
+    },
+    "bin": "WorkBuddy.exe",
+    "shortcuts": [
+        [
+            "WorkBuddy.exe",
+            "WorkBuddy"
+        ]
+    ],
+    "checkver": {
+        "url": "https://www.workbuddy.cn/v2/update?platform=workbuddy-win32-x64-user",
+        "regex": "\"version\":\"([^\"]+)\",\"url\":\"([^\"]+)\""
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "$match2#/dl.7z"
+            }
+        }
+    }
+}
