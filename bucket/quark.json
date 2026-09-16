@@ -1,0 +1,38 @@
+{
+    "##": "夸克浏览器 PC 版（Inno Setup）。用官方 /DIR 参数直接装进 scoop 目录，无需搬运。安装后清理 Inno 写入的注册表卸载项、QuarkUpdater 目录与开始菜单快捷方式。注意：本包只清理夸克浏览器自身的痕迹，不会触碰同厂商的夸克网盘（QuarkCloudDrive）。",
+    "version": "7.1.5.968",
+    "description": "Quark - Alibaba AI browser with built-in Qwen assistant",
+    "homepage": "https://quark.cn/",
+    "license": "Freeware",
+    "architecture": {
+        "64bit": {
+            "url": "https://umcdn.quark.cn/download/37212/quarkpc/pcquark@homepage_oficial/QuarkPC_V7.1.5.968_pc_pf30002_(zh-cn)_release_(Build3154107-1000-x64).exe#/dl.exe",
+            "hash": "6d1ed4309b43aabbd85021058028663edf1bc63a7cfbea5037abc2e985ba4974"
+        }
+    },
+    "installer": {
+        "script": [
+            "Start-Process -FilePath \"$dir\\dl.exe\" -ArgumentList @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/CURRENTUSER', \"/DIR=$dir\\Quark\") -Wait",
+            "Start-Sleep -Seconds 2",
+            "Remove-Item \"$env:LOCALAPPDATA\\QuarkUpdater\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item 'Registry::HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{FB7670C2-7F99-426D-B687-21BB585A5C73}_is1' -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\\夸克.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:USERPROFILE\\Desktop\\夸克.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$dir\\dl.exe\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "Remove-Item \"$env:LOCALAPPDATA\\QuarkUpdater\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item 'Registry::HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{FB7670C2-7F99-426D-B687-21BB585A5C73}_is1' -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\\夸克.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:USERPROFILE\\Desktop\\夸克.lnk\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "shortcuts": [
+        [
+            "Quark\\quark.exe",
+            "夸克"
+        ]
+    ]
+}
