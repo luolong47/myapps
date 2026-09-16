@@ -1,0 +1,44 @@
+{
+    "##": "Tabbit 官方只提供自更新安装包（Chromium updater 框架，payload 加密），无法直接解压。本 manifest 采用：静默安装到用户目录 -> 复制完整文件树 -> 彻底清理系统安装（目录/注册表/快捷方式/自启 Run 键/计划任务）的方式实现绿色化。注意：官网下载页硬编码的版本号长期滞后，checkver 不可靠，升级请手动改 version 并执行 scoop update tabbit。",
+    "version": "1.14.19",
+    "description": "Tabbit - AI-native browser from Meituan GN06 (free agentic browser)",
+    "homepage": "https://www.tabbit.com/",
+    "license": "Freeware",
+    "architecture": {
+        "64bit": {
+            "url": "https://releases.tabbit.com/upgrade/windows/stable_x64_cn/Tabbit%20Browser_stable_x64_cn_1.14.19.exe#/dl.exe",
+            "hash": "fb92abb0fa1c3bd96839adf4eeb5dda1f1a5b1633841005539ba91ddfa5e7100"
+        }
+    },
+    "installer": {
+        "script": [
+            "Start-Process -FilePath \"$dir\\dl.exe\" -ArgumentList @('--silent', '--do-not-launch-chrome') -Wait",
+            "Copy-Item \"$env:LOCALAPPDATA\\Tabbit Browser\\Application\\*\" $dir -Recurse -Force",
+            "Get-Process updater -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*TabbitBrowser*' } | Stop-Process -Force -ErrorAction SilentlyContinue",
+            "Start-Sleep -Seconds 2",
+            "Get-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -ErrorAction SilentlyContinue | Get-Member -MemberType NoteProperty | Where-Object { $_.Name -like 'TabbitBrowserUpdater*' } | ForEach-Object { Remove-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name $_.Name -Force -ErrorAction SilentlyContinue }",
+            "Get-ScheduledTask -ErrorAction SilentlyContinue | Where-Object { $_.TaskPath -like '*Tabbit*' } | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue",
+            "schtasks /delete /tn '\\TabbitBrowserUser\\TabbitBrowserUpdater' /f 2>$null | Out-Null; schtasks /delete /tn '\\TabbitBrowserUser' /f 2>$null | Out-Null",
+            "@('Tabbit Browser', 'TabbitBrowser') | ForEach-Object { Remove-Item \"$env:LOCALAPPDATA\\$_\" -Recurse -Force -ErrorAction SilentlyContinue }",
+            "Remove-Item 'Registry::HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Tabbit Browser' -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\\Tabbit Browser.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:USERPROFILE\\Desktop\\Tabbit Browser.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$dir\\dl.exe\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "shortcuts": [
+        [
+            "Tabbit Browser.exe",
+            "Tabbit",
+            "--user-data-dir=\"$dir\\User Data\""
+        ]
+    ],
+    "persist": "User Data",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://releases.tabbit.com/upgrade/windows/stable_x64_cn/Tabbit%20Browser_stable_x64_cn_$version.exe#/dl.exe"
+            }
+        }
+    }
+}
