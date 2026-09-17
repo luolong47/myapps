@@ -1,0 +1,54 @@
+{
+    "##": "QQ浏览器（腾讯，含 QBot AI 助手）。官方安装器为提权安装（Scope: machine，会触发 UAC），且安装完成后会自行启动浏览器并常驻，因此不能用 Start-Process -Wait 同步等待——改为异步启动 + 轮询主程序落地。版本号与哈希取自微软 winget-pkgs 官方清单并已逐一比对。安装/卸载会清除注册表 Run 键 qbclipboard（常驻剪贴板助手，带键盘钩子）与目录 %APPDATA%\\Tencent\\QBHO。实测警告：两个系统级计划任务 \\QQBrowser Updater Task 与 \\QQBrowser Updater Task(Core) 由提权安装创建，普通权限删除会返回 Access is denied，manifest 中的 Unregister-ScheduledTask 对它们无效，需以管理员身份执行 schtasks /delete /tn \"\\QQBrowser Updater Task\" /f。另一条实测结果：qbclipboard 清除后运行浏览器不会重建。不清除 %APPDATA%\\Tencent\\qimei（来自其他腾讯软件，不属于本包）。",
+    "version": "11.1.5155.400",
+    "description": "QQ Browser - Tencent AI browser with QBot assistant",
+    "homepage": "https://browser.qq.com/",
+    "license": "Freeware",
+    "architecture": {
+        "32bit": {
+            "url": "https://dldir1.qq.com/invc/tt/QQBrowser_Setup_11.1.5155.400.exe#/dl.exe",
+            "hash": "18ca900795b4f78c51f979c6417f1c05197ee9921e10c7b3ed78f5a54c5e58ec"
+        },
+        "64bit": {
+            "url": "https://dldir1.qq.com/invc/tt/QQBrowser_Setup_11.1.5155.400.exe#/dl.exe",
+            "hash": "18ca900795b4f78c51f979c6417f1c05197ee9921e10c7b3ed78f5a54c5e58ec"
+        }
+    },
+    "installer": {
+        "script": [
+            "Write-Host 'QQ浏览器安装器将请求管理员权限（UAC），请在弹出的对话框中选择“是”。'",
+            "Start-Process -FilePath \"$dir\\dl.exe\" -ArgumentList @('/S', \"/D=$dir\") -Verb RunAs | Out-Null",
+            "$deadline = (Get-Date).AddMinutes(4)",
+            "while ((Get-Date) -lt $deadline -and !(Test-Path \"$dir\\QQBrowser.exe\")) { Start-Sleep -Seconds 4 }",
+            "if (!(Test-Path \"$dir\\QQBrowser.exe\")) { abort 'QQ浏览器安装超时：请确认已通过 UAC 提权。' }",
+            "Start-Sleep -Seconds 8",
+            "Stop-Process -Name QQBrowser -Force -ErrorAction SilentlyContinue",
+            "Start-Sleep -Seconds 2",
+            "Remove-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'qbclipboard' -Force -ErrorAction SilentlyContinue",
+            "Get-ScheduledTask -ErrorAction SilentlyContinue | Where-Object { $_.TaskName -like 'QQBrowser Updater Task*' } | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Tencent\\QBHO\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$dir\\dl.exe\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\\QQ浏览器.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:USERPROFILE\\Desktop\\QQ浏览器.lnk\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "Stop-Process -Name QQBrowser -Force -ErrorAction SilentlyContinue",
+            "Start-Sleep -Seconds 2",
+            "Remove-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'qbclipboard' -Force -ErrorAction SilentlyContinue",
+            "Get-ScheduledTask -ErrorAction SilentlyContinue | Where-Object { $_.TaskName -like 'QQBrowser Updater Task*' } | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Tencent\\QBHO\" -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item 'Registry::HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\QQBrowser' -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item 'Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\QQBrowser' -Recurse -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\\QQ浏览器.lnk\" -Force -ErrorAction SilentlyContinue",
+            "Remove-Item \"$env:USERPROFILE\\Desktop\\QQ浏览器.lnk\" -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "shortcuts": [
+        [
+            "QQBrowser.exe",
+            "QQ浏览器"
+        ]
+    ]
+}
