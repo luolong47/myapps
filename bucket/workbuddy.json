@@ -5,7 +5,9 @@
     "license": "Freeware",
     "notes": [
         "安装包 URL 由官方更新接口返回（含 commit 短哈希），autoupdate 从接口整体提取，请勿手工拼接。",
-        "官方接口不提供 sha256，autoupdate 更新时会自动下载安装包计算 hash 并回填（每次更新需下载约 500MB）。"
+        "官方接口不提供 sha256，autoupdate 更新时会自动下载安装包计算 hash 并回填（每次更新需下载约 500MB）。",
+        "【重要·方案B 静态hash】该上游 CDN 存在同一版本号重打包的情况，autoupdate 回填的 sha256 可能是脏数据：5.5.6.38337834 就曾被写坏（b1c61b8a...71f4），2026-09-18 手工修正为 0be18472...4303。",
+        "版本更新后若 hash 校验失败，请下载 exe 后执行 certutil -hashfile <file> SHA256 核对，并以实测值手工修正本 manifest（勿信 autoupdate 自动回填值）。"
     ],
     "architecture": {
         "64bit": {
