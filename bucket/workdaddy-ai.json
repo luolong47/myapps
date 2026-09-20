@@ -4,12 +4,13 @@
     "homepage": "https://github.com/babygoton/WorkDaddy",
     "license": "AGPL-3.0-or-later",
     "notes": [
-        "便携版由 luolong47/WorkDaddy fork 基于上游同一 tag 源码构建，资产与上游 release 同步。",
-        "需先安装 WorkBuddy AI 桌面端（workbuddy.ai）。"
+        "便携包直接取上游 release 资产（WorkDaddy-AI-Portable-<version>.zip），解压根目录即 WorkDaddyLauncher.exe，图标在 scripts/WorkDaddy.ico。",
+        "需先安装 WorkBuddy AI 桌面端（workbuddy.ai）。",
+        "上游同一 tag 会标注「已验证」的 WorkBuddy 客户端版本，升级客户端前请先核对 release notes。"
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/luolong47/WorkDaddy/releases/download/v1.2.5/WorkDaddy-AI-Portable-1.2.5.zip",
+            "url": "https://github.com/babygoton/WorkDaddy/releases/download/1.2.5/WorkDaddy-AI-Portable-1.2.5.zip",
             "hash": "e354ff947f7276a728c841b0ba2736eeb41e092ffb63820b929f8f751739d542"
         }
     },
@@ -21,21 +22,21 @@
         ]
     ],
     "post_install": [
-        "# scoop shortcuts 不支持 IconLocation；上游图标在独立 .ico（打包脚本保证其不随版本变化）",
+        "# scoop shortcuts 不支持 IconLocation；上游图标固定在 scripts/WorkDaddy.ico（实测 1.2.4 / 1.2.5 内容一致）",
         "$ws = New-Object -ComObject WScript.Shell",
         "$icon = \"$dir\\scripts\\WorkDaddy.ico\"",
         "Get-ChildItem \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\" -Recurse -Filter 'WorkDaddy AI.lnk' -ErrorAction SilentlyContinue | ForEach-Object { $s = $ws.CreateShortcut($_.FullName); $s.IconLocation = $icon; $s.Save() }"
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
-        "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""
+        "url": "https://api.github.com/repos/babygoton/WorkDaddy/releases/latest",
+        "regex": "\"tag_name\":\\s*\"([\\d.]+)\""
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/luolong47/WorkDaddy/releases/download/v$version/WorkDaddy-AI-Portable-$version.zip",
+                "url": "https://github.com/babygoton/WorkDaddy/releases/download/$version/WorkDaddy-AI-Portable-$version.zip",
                 "hash": {
-                    "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
+                    "url": "https://api.github.com/repos/babygoton/WorkDaddy/releases/tags/$version",
                     "regex": "\"name\":\\s*\"WorkDaddy-AI-Portable-$version\\.zip\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
                 }
             }

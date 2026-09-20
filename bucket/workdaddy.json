@@ -1,16 +1,17 @@
 {
-    "version": "1.2.4",
+    "version": "1.2.5",
     "description": "WorkBuddy 桌面端增强助手（国内版）：自动签到领积分、多账号独立备份、点切即用；免打扰模式让 AI 无人值守跑长任务；跨账号会话迁移、异常中断自动续接。",
     "homepage": "https://github.com/babygoton/WorkDaddy",
     "license": "AGPL-3.0-or-later",
     "notes": [
-        "便携版由 luolong47/WorkDaddy fork 基于上游同一 tag 源码构建，资产与上游 release 同步。",
-        "需先安装 WorkBuddy 桌面端（workbuddy.cn）。"
+        "便携包直接取上游 release 资产（WorkDaddy-Portable-<version>.zip），解压根目录即 WorkDaddyLauncher.exe，图标在 scripts/WorkDaddy.ico。",
+        "需先安装 WorkBuddy 桌面端（workbuddy.cn）。",
+        "上游同一 tag 会标注「已验证」的 WorkBuddy 客户端版本，升级客户端前请先核对 release notes。"
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/luolong47/WorkDaddy/releases/download/v1.2.4/WorkDaddy-Portable-1.2.4.zip",
-            "hash": "9e0ac82870a7a5ce11c776146342bc30482562e33fd0d2e609c47f2a9245d0d0"
+            "url": "https://github.com/babygoton/WorkDaddy/releases/download/1.2.5/WorkDaddy-Portable-1.2.5.zip",
+            "hash": "bd6b32b951d8dcb1e26c3385391e1da08610c466aba3e78363c2346bf0dd393e"
         }
     },
     "bin": "WorkDaddyLauncher.exe",
@@ -21,21 +22,21 @@
         ]
     ],
     "post_install": [
-        "# scoop shortcuts 不支持 IconLocation；上游图标在独立 .ico（打包脚本保证其不随版本变化）",
+        "# scoop shortcuts 不支持 IconLocation；上游图标固定在 scripts/WorkDaddy.ico（实测 1.2.4 / 1.2.5 内容一致）",
         "$ws = New-Object -ComObject WScript.Shell",
         "$icon = \"$dir\\scripts\\WorkDaddy.ico\"",
         "Get-ChildItem \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\" -Recurse -Filter 'WorkDaddy.lnk' -ErrorAction SilentlyContinue | ForEach-Object { $s = $ws.CreateShortcut($_.FullName); $s.IconLocation = $icon; $s.Save() }"
     ],
     "checkver": {
-        "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
-        "regex": "\"tag_name\":\\s*\"v([\\d.]+)\""
+        "url": "https://api.github.com/repos/babygoton/WorkDaddy/releases/latest",
+        "regex": "\"tag_name\":\\s*\"([\\d.]+)\""
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/luolong47/WorkDaddy/releases/download/v$version/WorkDaddy-Portable-$version.zip",
+                "url": "https://github.com/babygoton/WorkDaddy/releases/download/$version/WorkDaddy-Portable-$version.zip",
                 "hash": {
-                    "url": "https://api.github.com/repos/luolong47/WorkDaddy/releases/latest",
+                    "url": "https://api.github.com/repos/babygoton/WorkDaddy/releases/tags/$version",
                     "regex": "\"name\":\\s*\"WorkDaddy-Portable-$version\\.zip\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
                 }
             }
