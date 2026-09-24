@@ -1,12 +1,12 @@
 {
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "WorkBuddy 桌面端增强助手（国内版）：自动签到领积分、多账号独立备份、点切即用；免打扰模式让 AI 无人值守跑长任务；跨账号会话迁移、异常中断自动续接。",
     "homepage": "https://github.com/babygoton/WorkDaddy",
     "license": "AGPL-3.0-or-later",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/babygoton/WorkDaddy/releases/download/1.2.6/WorkDaddy-Portable-1.2.6.zip",
-            "hash": "022f3475279d7ce341c528901ce27e74c7241256fa5f92b4686ebf0aa2e7d3ca"
+            "url": "https://github.com/babygoton/WorkDaddy/releases/download/1.2.7/WorkDaddy-Portable-1.2.7.zip",
+            "hash": "43e98cd37a98d4c973ebd861c2642d2d22dd78b1e9ecb7c14ff2ca7222559854"
         }
     },
     "bin": "WorkDaddyLauncher.exe",
