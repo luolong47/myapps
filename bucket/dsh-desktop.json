@@ -1,6 +1,6 @@
 {
     "##": "DeepSeek Harness（dsh）官方桌面客户端，Electron 桌面壳 + 内置 dsh 运行时。electron-builder NSIS 打包，结构为 $PLUGINSDIR\\app-64.7z，故沿用 workbuddy 的 7zip 解包方案，不跑官方安装器。官方更新走 electron-updater 的 generic provider：app-update.yml 指向 https://download.deepseek.com/dsh-desk/feeds/win-x64/，channel=nightly，nightly.yml 提供 version 与 sha512，因此 checkver 轻量可靠。注意：上游只有 nightly 频道（无 latest.yml），当前为 RC 阶段，版本号形如 0.2.x-rc.N。本 manifest 直接使用带版本号的官方分发包（bin/win-x64/deepseek-harness-<version>-win-x64.exe），与 dsh-latest-windows-x64.exe 内容完全一致（已用 sha512 双向校验）。",
-    "version": "0.2.1-rc.2",
+    "version": "0.2.1-rc.3",
     "description": "DeepSeek Harness - DeepSeek 官方桌面智能体（内置 dsh 运行时与插件宿主）",
     "homepage": "https://download.deepseek.com/",
     "license": "Freeware",
@@ -12,8 +12,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://download.deepseek.com/dsh-desk/bin/win-x64/deepseek-harness-0.2.1-rc.2-win-x64.exe#/dl.7z",
-            "hash": "72e4a8579f11b5428dd0a1506532777924adba7ecaacc710a7e429085796537f"
+            "url": "https://download.deepseek.com/dsh-desk/bin/win-x64/deepseek-harness-0.2.1-rc.3-win-x64.exe#/dl.7z",
+            "hash": "1e3876baaa20c3f26371dba7b6873bb70c3ef9b91403f6d3f87d2b27d4fd1e3a"
         }
     },
     "installer": {
