@@ -1,5 +1,5 @@
 {
-    "version": "5.8.3.41334564",
+    "version": "5.9.3.42398134",
     "description": "WorkBuddy 是腾讯出品的全场景 AI 办公工作台：说出要求、自主规划并调用工具执行任务、交付完整成果；深度打通腾讯文档、腾讯会议、企业微信、微信等腾讯办公生态。",
     "homepage": "https://www.workbuddy.cn/",
     "license": "Freeware",
@@ -11,8 +11,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://download.codebuddy.cn/workbuddy/saas/win32-x64-user/WorkBuddy-win32-x64-user-5.8.3.41334564-db0e9b51.exe#/dl.7z",
-            "hash": "824de10f3196c501004f540eb84ee881292fef2f5df9fb3fc48af9ea5366c03c"
+            "url": "https://download.codebuddy.cn/workbuddy/saas/win32-x64-user/WorkBuddy-win32-x64-user-5.9.3.42398134-d4692421.exe#/dl.7z",
+            "hash": "b5edb52bd6c5b6c7296cf2fff697b019c86d11992a8a814c3010d611896852f9"
         }
     },
     "installer": {
