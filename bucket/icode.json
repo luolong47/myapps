@@ -1,0 +1,50 @@
+{
+    "##": "iCode (openJiuwen-ai/iCode) 官方离线包。Windows 包是单文件自解压 launcher（icode.exe），内含 Python 运行时与全部依赖，解压即用，不写注册表、不碰用户 PATH。注意不要跑 `icode install`：那是官方给裸机用的，会把 chrys.exe/icode.exe 复制进 %LOCALAPPDATA%\\chrys\\bin 并改写用户 PATH，绕开 scoop 管理。",
+    "version": "0.32.2",
+    "description": "Lightweight, extensible, fully offline agent/workflow platform with an intuitive TUI. Chrys code name.",
+    "homepage": "https://github.com/openJiuwen-ai/iCode",
+    "license": "Apache-2.0",
+    "notes": [
+        "TUI 应用，建议在 Windows Terminal 里跑。首次启动按 F4 配置模型供应商，按 F8 看内置指南。",
+        "不要执行 'icode install'：它会把程序复制到 %LOCALAPPDATA%\\chrys\\bin 并改写用户 PATH，与 scoop 管理冲突。升级用 scoop update icode。",
+        "所有用户数据都在 %APPDATA%\\chrys（源码里 config_dir = data_dir），不在安装目录，scoop update/uninstall/cleanup 都碰不到：模型 profile 在 models\\*.yaml（API key 明文存于此）、会话在 sessions\\<id>\\session.json、设置与 F4 选项在 settings.yaml、日志在 logs\\。",
+        "只有 'icode uninstall --purge' 会删这些数据，正常卸载请用 scoop uninstall icode。",
+        "单文件自解压包，每次启动要解包运行时，冷启动几秒属正常。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v0.32.2/icode-windows-x86_64-v0.32.2-offline.zip",
+            "hash": "f4f8c433ac7ca6dba33954c5d93b7fa4704d1d28be8fa66f3300af0419b4d4eb"
+        },
+        "arm64": {
+            "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v0.32.2/icode-windows-aarch64-v0.32.2-offline.zip",
+            "hash": "56b0a7cb9b32f8dcf629aef701237542c0285b20e686d2c6d9a739aad4367378"
+        }
+    },
+    "bin": [
+        [
+            "icode.exe",
+            "icode"
+        ],
+        [
+            "icode.exe",
+            "chrys"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/openJiuwen-ai/iCode"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v$version/icode-windows-x86_64-v$version-offline.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v$version/icode-windows-aarch64-v$version-offline.zip"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/SHA256SUMS.txt"
+        }
+    }
+}
