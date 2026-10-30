@@ -1,0 +1,45 @@
+{
+    "##": "OpenIDEA 是 Tauri v2 桌面 IDE（Rust）。官方 Windows 产物只有 NSIS 安装器（OpenIDEA_<ver>_x64-setup.exe）与 WiX MSI，二者内部均只含单个 openidea.exe（156MB，前端与运行时已内嵌），因此本 manifest 直接用 7zip 解 NSIS，不运行官方安装器：不写注册表卸载项、不建桌面图标、不设开机自启。应用配置由 Tauri identifier 决定，落在 %APPDATA%\\ai.l0ng.openidea，不随 scoop 目录迁移。运行时依赖 WebView2 Runtime（Win11 自带，Win10 需另装）。",
+    "version": "0.1.27",
+    "description": "OpenIDEA - IntelliJ IDEA-style IDE rebuilt in Rust, with editor, code insight, debugger, Git, terminal, database and HTTP clients",
+    "homepage": "https://github.com/l0ng-ai/openidea",
+    "license": "Apache-2.0",
+    "notes": [
+        "本包仅解包官方 NSIS 安装器中的 openidea.exe，未运行安装器，因此不会注册卸载项或创建桌面图标。",
+        "用户配置与索引缓存在 %APPDATA%\\ai.l0ng.openidea（Tauri identifier: ai.l0ng.openidea），卸载/升级 scoop 包不会清除。",
+        "依赖 Microsoft Edge WebView2 Runtime；Windows 11 已内置，Windows 10 若启动白屏请先安装 WebView2。",
+        "应用自带自动更新入口，若通过应用内更新会覆盖 scoop 目录内的 exe；建议统一用 scoop update openidea 升级。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/l0ng-ai/openidea/releases/download/v0.1.27/OpenIDEA_0.1.27_x64-setup.exe#/dl.exe",
+            "hash": "c724f1e1fd28155ac69a4f8c4382c0d1f8df8cad8800196c3ba0bf32a86c1505"
+        }
+    },
+    "installer": {
+        "script": [
+            "Expand-7zipArchive \"$dir\\dl.exe\" \"$dir\" -Removal",
+            "Remove-Item \"$dir\\`$PLUGINSDIR\", \"$dir\\uninstall.exe\" -Recurse -Force -ErrorAction SilentlyContinue"
+        ]
+    },
+    "shortcuts": [
+        [
+            "openidea.exe",
+            "OpenIDEA"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/l0ng-ai/openidea"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/l0ng-ai/openidea/releases/download/v$version/OpenIDEA_$version_x64-setup.exe#/dl.exe",
+                "hash": {
+                    "url": "https://api.github.com/repos/l0ng-ai/openidea/releases/tags/v$version",
+                    "regex": "\"name\":\\s*\"OpenIDEA_$version_x64-setup\\.exe\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
+                }
+            }
+        }
+    }
+}
