@@ -1,6 +1,6 @@
 {
     "##": "OpenIDEA 是 Tauri v2 桌面 IDE（Rust）。官方 Windows 产物只有 NSIS 安装器（OpenIDEA_<ver>_x64-setup.exe）与 WiX MSI，二者内部均只含单个 openidea.exe（156MB，前端与运行时已内嵌），因此本 manifest 直接用 7zip 解 NSIS，不运行官方安装器：不写注册表卸载项、不建桌面图标、不设开机自启。应用配置由 Tauri identifier 决定，落在 %APPDATA%\\ai.l0ng.openidea，不随 scoop 目录迁移。运行时依赖 WebView2 Runtime（Win11 自带，Win10 需另装）。",
-    "version": "0.1.32",
+    "version": "0.1.33",
     "description": "OpenIDEA - IntelliJ IDEA-style IDE rebuilt in Rust, with editor, code insight, debugger, Git, terminal, database and HTTP clients",
     "homepage": "https://github.com/l0ng-ai/openidea",
     "license": "Apache-2.0",
@@ -12,8 +12,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/l0ng-ai/openidea/releases/download/v0.1.32/OpenIDEA_0.1.32_x64-setup.exe#/dl.exe",
-            "hash": "7e0093fee6bc8b91790acaa6b108d659875ebf8086438bc84dcde608112257b9"
+            "url": "https://github.com/l0ng-ai/openidea/releases/download/v0.1.33/OpenIDEA_0.1.33_x64-setup.exe#/dl.exe",
+            "hash": "ac3928f5a8b06c91b100fd2c7a7619070af9cad39944bf83fa9c81a8ea74be48"
         }
     },
     "installer": {
