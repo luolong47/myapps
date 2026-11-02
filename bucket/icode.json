@@ -1,6 +1,6 @@
 {
     "##": "iCode (openJiuwen-ai/iCode) 官方离线包。Windows 包是单文件自解压 launcher（icode.exe），内含 Python 运行时与全部依赖，解压即用，不写注册表、不碰用户 PATH。注意不要跑 `icode install`：那是官方给裸机用的，会把 chrys.exe/icode.exe 复制进 %LOCALAPPDATA%\\chrys\\bin 并改写用户 PATH，绕开 scoop 管理。",
-    "version": "0.32.3",
+    "version": "0.33.0",
     "description": "Lightweight, extensible, fully offline agent/workflow platform with an intuitive TUI. Chrys code name.",
     "homepage": "https://github.com/openJiuwen-ai/iCode",
     "license": "Apache-2.0",
@@ -13,12 +13,12 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v0.32.3/icode-windows-x86_64-v0.32.3-offline.zip",
-            "hash": "2294f3abd3c04a8ead2f125686918a6f86bad0bf7820c00219f554fdd625308a"
+            "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v0.33.0/icode-windows-x86_64-v0.33.0-offline.zip",
+            "hash": "d471e835da341bf8dcdc7929772ceeab782ebacb5cd009845d198e30deecc27f"
         },
         "arm64": {
-            "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v0.32.3/icode-windows-aarch64-v0.32.3-offline.zip",
-            "hash": "b2f41b8f3aef5c68eb4ca82950992852cbd2501f9667f4c87bec147fbb0bb688"
+            "url": "https://github.com/openJiuwen-ai/iCode/releases/download/v0.33.0/icode-windows-aarch64-v0.33.0-offline.zip",
+            "hash": "971db600610bdb6693f2ebcd27dad26abb4651e8ed1ef7bc3815f99c587bbaab"
         }
     },
     "bin": [
