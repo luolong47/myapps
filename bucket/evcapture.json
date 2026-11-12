@@ -1,0 +1,40 @@
+{
+    "version": "5.5.9",
+    "description": "EV录屏 - 免费高清无水印的屏幕录制软件，支持录制与直播",
+    "homepage": "https://www.ieway.cn/evcapture.html",
+    "license": "Freeware",
+    "notes": "本包用 innounp 解包官方 Inno Setup 安装器，不运行安装程序，因此不会写卸载项、桌面快捷方式或防火墙规则。updater.exe 会在安装后删除，请用 scoop update evcapture 升级。",
+    "architecture": {
+        "64bit": {
+            "url": "https://ctpublic.ieway.cn/public/download/EVCapture_v5.5.9.exe",
+            "hash": "ba516dc2a3a29674d41bd5af8e1bd1ad77736e03e89ac7b84dfbc304ff67229b"
+        },
+        "arm64": {
+            "url": "https://ctpublic.ieway.cn/public/download/EVCapture_v5.5.9_arm64.exe",
+            "hash": "4b616d30f14d991bfe399430da844b5380a925c4dad97a5c4a206bedc5f31176"
+        }
+    },
+    "innosetup": true,
+    "post_install": "Remove-Item \"$dir\\updater.exe\" -Force -ErrorAction SilentlyContinue",
+    "bin": "EVCapture.exe",
+    "shortcuts": [
+        [
+            "EVCapture.exe",
+            "EV录屏"
+        ]
+    ],
+    "checkver": {
+        "url": "https://www.ieway.cn/evcapture.html",
+        "regex": "id=\"evcaptureWinDownload\"[^>]*EVCapture_v([\\d.]+)\\.exe"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://ctpublic.ieway.cn/public/download/EVCapture_v$version.exe"
+            },
+            "arm64": {
+                "url": "https://ctpublic.ieway.cn/public/download/EVCapture_v$version_arm64.exe"
+            }
+        }
+    }
+}
