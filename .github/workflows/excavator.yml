@@ -3,8 +3,11 @@ name: Excavator
 on:
   workflow_dispatch:
   schedule:
-    # run every 4 hours
-    - cron: '20 */4 * * *'
+    # 每 2 小时一次：偶数小时 :07、奇数小时 :23，均取奇数分钟并错开整点。
+    # GitHub schedule 是 best-effort，负载高时整次 tick 会被直接丢弃，
+    # 两条 cron 交替可在一处丢失时仍有另一条兜底。
+    - cron: '7 0-23/4 * * *'
+    - cron: '23 2-23/4 * * *'
 
 permissions:
   contents: write
