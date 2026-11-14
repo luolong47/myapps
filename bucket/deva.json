@@ -1,0 +1,40 @@
+{
+    "##": "Deva 官方 Windows portable zip（Deva-<ver>-portable.zip）根目录为 Deva/，主程序 Deva.exe。不用 setup.exe，避免 NSIS 写注册表卸载项和桌面图标。发布资产带 GitHub digest（sha256），autoupdate 从 release API 提取，不必整包下载算哈希。",
+    "version": "0.1.15",
+    "description": "Deva - 对话式 AI 助手，把 Agent 能力装进对话里",
+    "homepage": "https://sqfcyily.github.io/deva/",
+    "license": "MIT",
+    "notes": [
+        "仅提供官方 Windows x64 portable 包，解压后直接运行 Deva.exe。",
+        "未运行官方安装器，因此不写注册表卸载项、不建桌面图标。",
+        "应用内更新若自行覆盖安装目录，请改用 scoop update deva。"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/sqfcyily/deva/releases/download/v0.1.15/Deva-0.1.15-portable.zip",
+            "hash": "2bcd414d60981a015743379f70883bff182414b35c33e4e2259799c1d3a4aab7",
+            "extract_dir": "Deva"
+        }
+    },
+    "bin": "Deva.exe",
+    "shortcuts": [
+        [
+            "Deva.exe",
+            "Deva"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/sqfcyily/deva"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/sqfcyily/deva/releases/download/v$version/Deva-$version-portable.zip",
+                "hash": {
+                    "url": "https://api.github.com/repos/sqfcyily/deva/releases/tags/v$version",
+                    "regex": "\"name\":\\s*\"Deva-$version-portable\\.zip\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
+                }
+            }
+        }
+    }
+}
