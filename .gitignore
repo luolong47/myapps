@@ -3,3 +3,6 @@
 ._*
 page.html
 checkver-*.html
+
+# 项目数据目录（记忆/配置，非临时缓存，禁止被 git clean 清理）
+.workbuddy/

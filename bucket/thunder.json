@@ -1,0 +1,80 @@
+{
+    "##": "迅雷 PC 客户端（Electron 版，25.1.x 系列）。官方只发一个约 197MB 的自研壳安装器 ThunderSetup<ver>xl.exe：要求管理员权限；卸载器是诱导式向导（更新/修复/卸载三选一，/VERYSILENT 会被无视），安装时还会把系统里上百个音视频扩展名抢注成 thunder.*、写 HKCU 自启、注册 XLServicePlatform 服务。本包因此改成纯解包：安装器里的 INSTALLZIP 资源本身就是 7z（内层是 ThunderProgram.7z），解出来就是完整 program 目录，实测可直接运行。不装服务、不写 HKLM、不抢文件关联、不加自启，卸载只删目录。\n\n用户数据分两处：%APPDATA%\\thunder（Electron 的 Cookie/LocalStorage/IndexedDB）和 exe 上两级目录的 profiles\\（任务库、云盘索引、config.json）。profiles 这条坑最深——程序按「exe 的祖父目录」定位它，所以落在 scoop\\apps\\thunder\\profiles，而 scoop 卸载时会把这层当成旧版本目录删掉，登录就没了。本包把两处都改成指向 $persist_dir 的目录联结，升级/重装都不丢登录。",
+    "version": "25.1.40.1705",
+    "description": "Thunder (迅雷) - download manager with BT / magnet / eD2k support and cloud drive",
+    "homepage": "https://pc.xunlei.com/",
+    "license": {
+        "identifier": "Proprietary",
+        "url": "https://i.xunlei.com/xluser/agreement.html"
+    },
+    "architecture": {
+        "64bit": {
+            "url": "https://down.sandai.net/thunder_pc/ThunderSetup25.1.40.1705xl.exe#/dl.7z",
+            "hash": "f5d6e0ec347aa4fb780304ee69ef52420db032f124ebfdc70d7c0fa47674c3d8"
+        }
+    },
+    "installer": {
+        "script": [
+            "$payload = \"$dir\\ThunderProgram.7z\"",
+            "if (!(Test-Path $payload)) { error '官方安装包里没有 ThunderProgram.7z，安装器结构可能已变更' }",
+            "7z x \"$payload\" \"-o$dir\" -y | Out-Null",
+            "Remove-Item $payload -Force -ErrorAction SilentlyContinue",
+            "if (!(Test-Path \"$dir\\thunder.exe\")) { error '解包后找不到 thunder.exe' }"
+        ]
+    },
+    "post_install": [
+        "$links = @(@{ p = \"$env:APPDATA\\thunder\"; t = \"$persist_dir\\userdata\" }, @{ p = (Join-Path (Split-Path $dir) 'profiles'); t = \"$persist_dir\\profiles\" })",
+        "foreach ($l in $links) {",
+        "    New-Item -ItemType Directory -Force -Path $l.t | Out-Null",
+        "    if (Test-Path $l.p) {",
+        "        $item = Get-Item $l.p -Force",
+        "        if ([bool]($item.Attributes -band [IO.FileAttributes]::ReparsePoint)) { [IO.Directory]::Delete($l.p, $false) }",
+        "        else { Copy-Item \"$($l.p)\\*\" $l.t -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item $l.p -Recurse -Force -ErrorAction SilentlyContinue }",
+        "    }",
+        "    New-Item -ItemType Junction -Path $l.p -Target $l.t | Out-Null",
+        "    if (!(Test-Path $l.p)) { error \"无法创建目录联结: $($l.p)\" }",
+        "}",
+        "$cfg = \"$persist_dir\\profiles\\config.json\"",
+        "if (!(Test-Path $cfg)) {",
+        "    $tpl = [ordered]@{",
+        "        TaskDefaultSettings = [ordered]@{ InitPath = \"$env:USERPROFILE\\Downloads\"; DefaultPath = \"$env:USERPROFILE\\Downloads\" }",
+        "        GUIDE_INFO = [ordered]@{ isShowGuideAtFirstTime = $false; isRunning = $false; currentStep = 'create-task-btn'; isShowBubble = $false }",
+        "        DefaultPlayer = [ordered]@{ IsFirstGuideShowed = $true }",
+        "        ConfigNormalSession = [ordered]@{ ConfigNormal_AutoRun = $false; AutoUpdate = $false; SyncLocalBookmark = $false }",
+        "        Motitor = [ordered]@{ MotitorAll = $false; 'MotitorIE浏览器' = $false; 'MotitorEdge浏览器' = $false; MotitorChrome = $false; 'MotitorQQ浏览器' = $false; 'Motitor360安全浏览器' = $false; 'Motitor360极速浏览器' = $false; 'Motitor360极速浏览器X' = $false }",
+        "        ConfigNav = [ordered]@{ ShowGameModule = $false }",
+        "        ThunderPanPlugin = [ordered]@{ ShellContextmenu = $false; defaultDownloadPath = \"$env:USERPROFILE\\Downloads\" }",
+        "        CompletedTaskPlay = [ordered]@{ LanuchMediaPlayer = 2 }",
+        "        ConfigFloatPanel = [ordered]@{ FloatPanelValue = 2 }",
+        "    }",
+        "    [IO.File]::WriteAllText($cfg, ($tpl | ConvertTo-Json -Depth 6), [Text.UTF8Encoding]::new($false))",
+        "}",
+        "$ns = 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace'",
+        "if (Test-Path $ns) { Get-ChildItem $ns | Where-Object { (Get-ItemProperty $_.PSPath).'(default)' -match '迅雷' } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue }",
+        "Remove-Item \"$env:LOCALAPPDATA\\Thunder Network\\xlgame_resource\" -Recurse -Force -ErrorAction SilentlyContinue"
+    ],
+    "shortcuts": [
+        [
+            "thunder.exe",
+            "迅雷"
+        ]
+    ],
+    "notes": [
+        "登录凭证、任务库、云盘索引分别在 ~\\scoop\\persist\\thunder\\userdata（%APPDATA%\\thunder）和 ~\\scoop\\persist\\thunder\\profiles（apps\\thunder\\profiles），两处都是目录联结，scoop 升级/重装不掉登录。",
+        "首次启动的预置（写在 profiles\\config.json，想改就改那个文件，先退出迅雷）：引导弹窗和“设为默认播放器”弹窗都标记为看过；下载目录直接用 ~\\Downloads，不再建 C:\\迅雷下载；开机自启关；自动更新关；收藏夹云同步关；左侧栏【游戏】模块隐藏；本地文件右键菜单不显示“上传到迅雷云盘”；下载完成的视频用系统默认播放器打开；悬浮球永久关闭；“允许迅雷接管浏览器下载”关掉（Motitor.MotitorAll，连带 Chrome/Edge/IE/QQ/360 全部分项一起置 false，实测重启不回弹）。",
+        "不写任何文件扩展名关联——安装器那 103 个 thunder.* 关联本包一个都不碰。但有两项是程序自己的硬行为，改不死：启动时必写 4 个协议键 HKCU\\Software\\Classes\\thunder{app,im,x}（接收 thunder:// 链接），以及把 config.json 里 SDK 层的 Monitor.WatchTraditionLink、MagnetGenericSettings.MagnetWatchLink 重置成 true（这两个在设置面板上没有直接对应的开关，MotitorAll 关掉后它们也不生效）。好在解包版没有浏览器 BHO 组件，浏览器下载接管实际不会发生。",
+        "目录里的 ThunderRepair.exe（197MB）是官方塞进去的安装包副本，官方原样保留，想省空间可以自己删掉。",
+        "迅雷自带更新器 XLLiveUD 仍可能尝试自我升级，建议在设置里关闭自动更新，升级交给 scoop。"
+    ],
+    "checkver": {
+        "url": "https://dl.xunlei.com/",
+        "regex": "XunLeiWebSetup([\\d.]+)[a-z0-9]+\\.exe"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://down.sandai.net/thunder_pc/ThunderSetup$versionxl.exe#/dl.7z"
+            }
+        }
+    }
+}
