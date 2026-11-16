@@ -51,6 +51,9 @@
         "}",
         "$ns = 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace'",
         "if (Test-Path $ns) { Get-ChildItem $ns | Where-Object { (Get-ItemProperty $_.PSPath).'(default)' -match '迅雷' } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue }",
+        "foreach ($n in 'UploadToThunderPan', 'ThunderShell') { $k = \"HKCU:\\Software\\Classes\\*\\shell\\$n\"; if (Test-Path -LiteralPath $k) { Remove-Item -LiteralPath $k -Recurse -Force -ErrorAction SilentlyContinue } }",
+        "$cx = 'HKCU:\\Software\\Classes\\*\\shellex\\ContextMenuHandlers\\ThunderPlayShell'",
+        "if (Test-Path -LiteralPath $cx) { Remove-Item -LiteralPath $cx -Recurse -Force -ErrorAction SilentlyContinue }",
         "Remove-Item \"$env:LOCALAPPDATA\\Thunder Network\\xlgame_resource\" -Recurse -Force -ErrorAction SilentlyContinue"
     ],
     "shortcuts": [
