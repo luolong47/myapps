@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "本地聊天记录全文检索：统一搜索 WorkBuddy 与 DeepSeek Harness 会话，Windows 托盘常驻 + 离线网页界面，全程不联网。",
   "homepage": "https://github.com/luolong47/chatsearch",
   "license": "MIT",
@@ -11,8 +11,8 @@
   ],
   "architecture": {
     "64bit": {
-      "url": "https://github.com/luolong47/chatsearch/releases/download/v0.3.0/chatsearch.exe",
-      "hash": "3286a612e22c88b5fe811a777e8867de12ca710bbee173e4d2476e70e5d4462b"
+      "url": "https://github.com/luolong47/chatsearch/releases/download/v0.3.1/chatsearch.exe",
+      "hash": "85d485b5f17a17179cceddc0bb0af39db2742ec68353f3d747b790b792546000"
     }
   },
   "bin": "chatsearch.exe",
