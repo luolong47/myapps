@@ -1,0 +1,50 @@
+{
+  "version": "0.13.0",
+  "description": "通用窗口超分/放大工具：用 Anime4K、FSR、CRT 等算法把低分辨率窗口或老游戏实时放大到全屏，WinUI 界面，支持多显示器。",
+  "homepage": "https://github.com/Blinue/Magpie",
+  "license": "GPL-3.0-or-later",
+  "notes": [
+    "配置默认在 %LOCALAPPDATA%\\Magpie\\config\\v*\\config.json，scoop 升级不会动它。",
+    "便携模式的判定条件是「当前工作目录下存在 config\\config.json」，不是 exe 旁边。从开始菜单快捷方式启动时工作目录是安装目录，从终端敲 magpie 时是终端当前目录，两处配置互不相通，别混着用。",
+    "要缩放需要管理员权限的窗口（任务管理器、带反作弊的游戏）时，Magpie 本身也必须以管理员身份启动，否则会被 UIPI 挡住、只会缩放黑屏或干脆失败。",
+    "已删除 Updater.exe：上游的自更新器会把文件写回安装目录，和 scoop 的版本目录冲突。升级请用 scoop update magpie。"
+  ],
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/Blinue/Magpie/releases/download/v0.13.0/Magpie-v0.13.0-x64.zip",
+      "hash": "a3f774dce9d2e050fb0934c362d51d8db459a2e79e6f937bdb86852312899a9e"
+    },
+    "arm64": {
+      "url": "https://github.com/Blinue/Magpie/releases/download/v0.13.0/Magpie-v0.13.0-ARM64.zip",
+      "hash": "3f1d4f8fade6da13402ac4ea739867d60f0dee50e4c4fa56aab508eab0109551"
+    }
+  },
+  "depends": "extras/vcredist",
+  "post_install": "Remove-Item \"$dir\\Updater.exe\" -Force -ErrorAction SilentlyContinue",
+  "bin": "Magpie.exe",
+  "shortcuts": [
+    [
+      "Magpie.exe",
+      "Magpie"
+    ]
+  ],
+  "checkver": "github",
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/Blinue/Magpie/releases/download/v$version/Magpie-v$version-x64.zip",
+        "hash": {
+          "url": "https://api.github.com/repos/Blinue/Magpie/releases/tags/v$version",
+          "regex": "\"name\":\\s*\"Magpie-v$version-x64\\.zip\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
+        }
+      },
+      "arm64": {
+        "url": "https://github.com/Blinue/Magpie/releases/download/v$version/Magpie-v$version-ARM64.zip",
+        "hash": {
+          "url": "https://api.github.com/repos/Blinue/Magpie/releases/tags/v$version",
+          "regex": "\"name\":\\s*\"Magpie-v$version-ARM64\\.zip\",[\\s\\S]*?\"digest\":\\s*\"sha256:([a-f0-9]{64})\""
+        }
+      }
+    }
+  }
+}
