@@ -7,7 +7,8 @@
     "配置默认在 %LOCALAPPDATA%\\Magpie\\config\\v*\\config.json，scoop 升级不会动它。",
     "便携模式的判定条件是「当前工作目录下存在 config\\config.json」，不是 exe 旁边。从开始菜单快捷方式启动时工作目录是安装目录，从终端敲 magpie 时是终端当前目录，两处配置互不相通，别混着用。",
     "要缩放需要管理员权限的窗口（任务管理器、带反作弊的游戏）时，Magpie 本身也必须以管理员身份启动，否则会被 UIPI 挡住、只会缩放黑屏或干脆失败。",
-    "已删除 Updater.exe：上游的自更新器会把文件写回安装目录，和 scoop 的版本目录冲突。升级请用 scoop update magpie。"
+    "已删除 Updater.exe：上游的自更新器会把文件写回安装目录，和 scoop 的版本目录冲突。升级请用 scoop update magpie。",
+    "config\\cache\\logs 已 persist 到 scoop\\persist\\magpie。默认仍是「非便携模式」，配置落在 %LOCALAPPDATA%\\Magpie，升级不受影响；想改成真正的便携（配置跟着 scoop 目录走），把 %LOCALAPPDATA%\\Magpie\\config\\v1\\config.json 复制成 persist\\magpie\\config\\config.json 即可，下次启动就按便携模式读它。"
   ],
   "architecture": {
     "64bit": {
@@ -27,6 +28,11 @@
       "Magpie.exe",
       "Magpie"
     ]
+  ],
+  "persist": [
+    "config",
+    "cache",
+    "logs"
   ],
   "checkver": "github",
   "autoupdate": {
