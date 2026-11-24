@@ -4,11 +4,11 @@
   "homepage": "https://github.com/Blinue/Magpie",
   "license": "GPL-3.0-or-later",
   "notes": [
-    "配置默认在 %LOCALAPPDATA%\\Magpie\\config\\v*\\config.json，scoop 升级不会动它。",
-    "便携模式的判定条件是「当前工作目录下存在 config\\config.json」，不是 exe 旁边。从开始菜单快捷方式启动时工作目录是安装目录，从终端敲 magpie 时是终端当前目录，两处配置互不相通，别混着用。",
-    "要缩放需要管理员权限的窗口（任务管理器、带反作弊的游戏）时，Magpie 本身也必须以管理员身份启动，否则会被 UIPI 挡住、只会缩放黑屏或干脆失败。",
+    "只提供开始菜单快捷方式，不建命令行 shim：Magpie 用「当前工作目录」判定便携模式，从终端启动会把工作目录带偏、读到另一份配置。请始终从快捷方式启动（工作目录固定为安装目录）。",
+    "默认是非便携模式，配置在 %LOCALAPPDATA%\\Magpie\\config\\v5\\config.json（版本号随上游升级变化），scoop 升级不会动它。",
+    "要缩放需要管理员权限的窗口（任务管理器、带反作弊的游戏）时，Magpie 本身也必须以管理员身份启动，否则会被 UIPI 挡住。",
     "已删除 Updater.exe：上游的自更新器会把文件写回安装目录，和 scoop 的版本目录冲突。升级请用 scoop update magpie。",
-    "config\\cache\\logs 已 persist 到 scoop\\persist\\magpie。默认仍是「非便携模式」，配置落在 %LOCALAPPDATA%\\Magpie，升级不受影响；想改成真正的便携（配置跟着 scoop 目录走），把 %LOCALAPPDATA%\\Magpie\\config\\v1\\config.json 复制成 persist\\magpie\\config\\config.json 即可，下次启动就按便携模式读它。"
+    "config\\cache\\logs 三个目录已 persist 到 scoop\\persist\\magpie。想改成真正的便携（配置跟着 scoop 目录走）：把上面那个 config.json 复制到 persist\\magpie\\config\\config.json，下次从快捷方式启动即按便携模式读它；不做这步时这三个目录是空的，属正常现象。"
   ],
   "architecture": {
     "64bit": {
@@ -22,7 +22,6 @@
   },
   "depends": "extras/vcredist",
   "post_install": "Remove-Item \"$dir\\Updater.exe\" -Force -ErrorAction SilentlyContinue",
-  "bin": "Magpie.exe",
   "shortcuts": [
     [
       "Magpie.exe",
