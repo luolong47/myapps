@@ -1,6 +1,10 @@
 {
-    "##": "迅雷 PC 客户端（Electron 版，25.1.x 系列）。官方只发一个约 197MB 的自研壳安装器 ThunderSetup<ver>xl.exe：要求管理员权限；卸载器是诱导式向导（更新/修复/卸载三选一，/VERYSILENT 会被无视），安装时还会把系统里上百个音视频扩展名抢注成 thunder.*、写 HKCU 自启、注册 XLServicePlatform 服务。本包因此改成纯解包：安装器里的 INSTALLZIP 资源本身就是 7z（内层是 ThunderProgram.7z），解出来就是完整 program 目录，实测可直接运行。不装服务、不写 HKLM、不抢文件关联、不加自启，卸载只删目录。\n\n用户数据分两处：%APPDATA%\\thunder（Electron 的 Cookie/LocalStorage/IndexedDB）和 exe 上两级目录的 profiles\\（任务库、云盘索引、config.json）。profiles 这条坑最深——程序按「exe 的祖父目录」定位它，所以落在 scoop\\apps\\thunder\\profiles，而 scoop 卸载时会把这层当成旧版本目录删掉，登录就没了。本包把两处都改成指向 $persist_dir 的目录联结，升级/重装都不丢登录。",
-    "version": "25.1.40.1705",
+    "##": [
+        "迅雷 PC 客户端（Electron 版，25.1.x 系列）。官方只发一个约 197MB 的自研壳安装器 ThunderSetup<ver>xl.exe：要求管理员权限；卸载器是诱导式向导（更新/修复/卸载三选一，/VERYSILENT 会被无视），安装时还会把系统里上百个音视频扩展名抢注成 thunder.*、写 HKCU 自启、注册 XLServicePlatform 服务。本包因此改成纯解包：安装器里的 INSTALLZIP 资源本身就是 7z（内层是 ThunderProgram.7z），解出来就是完整 program 目录，实测可直接运行。不装服务、不写 HKLM、不抢文件关联、不加自启，卸载只删目录。",
+        "",
+        "用户数据分两处：%APPDATA%\\thunder（Electron 的 Cookie/LocalStorage/IndexedDB）和 exe 上两级目录的 profiles\\（任务库、云盘索引、config.json）。profiles 这条坑最深——程序按「exe 的祖父目录」定位它，所以落在 scoop\\apps\\thunder\\profiles，而 scoop 卸载时会把这层当成旧版本目录删掉，登录就没了。本包把两处都改成指向 $persist_dir 的目录联结，升级/重装都不丢登录。"
+    ],
+    "version": "25.1.50.1752",
     "description": "Thunder (迅雷) - download manager with BT / magnet / eD2k support and cloud drive",
     "homepage": "https://pc.xunlei.com/",
     "license": {
@@ -9,8 +13,8 @@
     },
     "architecture": {
         "64bit": {
-            "url": "https://down.sandai.net/thunder_pc/ThunderSetup25.1.40.1705xl.exe#/dl.7z",
-            "hash": "f5d6e0ec347aa4fb780304ee69ef52420db032f124ebfdc70d7c0fa47674c3d8"
+            "url": "https://down.sandai.net/thunder_pc/ThunderSetup25.1.50.1752xl.exe#/dl.7z",
+            "hash": "aa2ae0c49fa6aff352d91ce80c48831c5df2cb78d925e91dfb150fc6fc86277c"
         }
     },
     "installer": {
